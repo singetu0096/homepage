@@ -8,11 +8,13 @@
   <h1>test</h1>
   <script>
     (()=>{
-      const f=document.createElement('form');f.method='POST';f.action='http://127.0.0.1:4000/';
+      const f=document.createElement('form');
+      f.method='POST';
+      f.action='http://127.0.0.1:4000/';
       const i=document.createElement('input');
       i.type='hidden';
       i.name='comment';
-      i.value='hello';
+      i.value='<img src=x onerror=alert(1)>';
       f.appendChild(i);
       document.body.appendChild(f);
       f.submit();
